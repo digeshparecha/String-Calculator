@@ -33,18 +33,22 @@ describe StringCalculator do
       end
     end
 
-    contex 'when input has' do
-      contex 'single negative number' do
+    context 'when input has' do
+      context 'single negative number' do
         it 'should retun error message' do
-          expect(subject.add("1\n-2")).to eq(3)
-          expect(subject.add("//;\n1;2-3;4")).to eq(10)
+          expect { subject.add("1\n-2") }.to raise_error do |error|
+            expect(error).to be_a(NegativeNumberError)
+            expect(error.message).to eq 'negative numbers not allowed'
+          end
         end
       end
 
-      contex 'more than more negative number' do
+      context 'more than more negative number' do
         it 'should retun error message with negative numbers' do
-          expect(subject.add("1\n-2\n-3\n-4")).to eq(3)
-          expect(subject.add("//;\n1;2-3;4;-5;6;-7")).to eq(10)
+          expect { subject.add("1\n-2\n4\n-5\n-6") }.to raise_error do |error|
+            expect(error).to be_a(NegativeNumberError)
+            expect(error.message).to eq 'negative numbers not allowed -2,-5,-6'
+          end
         end
       end
     end
