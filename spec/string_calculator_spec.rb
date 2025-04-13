@@ -24,5 +24,13 @@ describe StringCalculator do
         expect(subject.add("1,2\n3,4")).to eq(10)
       end
     end
+    
+    context 'when input is has delimiter' do
+      it 'should return sum' do
+        expect(subject.add('1')).to eq(1)
+        expect(subject.add("//?\n1?2")).to eq(3)
+        expect(subject.add("//;\n1;2;3;4")).to eq(10)
+      end
+    end
   end
 end
