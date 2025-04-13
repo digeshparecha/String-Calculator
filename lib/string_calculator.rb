@@ -1,5 +1,5 @@
-require 'pry'
-require './lib/negative_number_error'
+require 'negative_number_error'
+
 class StringCalculator
   def add(input)
 
