@@ -26,10 +26,14 @@ describe StringCalculator do
     end
     
     context 'when input has delimiter' do
-      it 'should return sum' do
+      it 'should return sum of each element' do
         expect(subject.add('1')).to eq(1)
         expect(subject.add("//?\n1?2")).to eq(3)
         expect(subject.add("//;\n1;2;3;4")).to eq(10)
+      end
+
+      it 'should return sum of the number even any number of delimiter given' do
+        expect(subject.add("//****\n1****2****3****4")).to eq(10)
       end
     end
 
