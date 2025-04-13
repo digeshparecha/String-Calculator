@@ -20,7 +20,7 @@ class StringCalculator
 
     # sum every comma and \n seperated element from input
     input.split(/[?=#{delimiter}]/) do |el|
-      sum += el.to_i
+      sum += el.to_i unless el.to_i > 1000
     end
 
     sum
