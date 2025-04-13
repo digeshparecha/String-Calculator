@@ -1,3 +1,4 @@
+require 'pry'
 class StringCalculator
   def add(input)
 
@@ -8,8 +9,8 @@ class StringCalculator
 
     sum = 0
     
-    # sum every comma seperated element from input
-    input.split(',').each do |el|
+    # sum every comma and \n seperated element from input
+    input.split(/[?=\n|,]/) do |el|
       sum += el.to_i
     end
 
