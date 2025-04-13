@@ -52,5 +52,11 @@ describe StringCalculator do
         end
       end
     end
+
+      context 'when input has number grater than 1000' do
+        it 'should ignore that number in sum ' do
+          expect(subject.add('1,2,10001,4,1000')).to eq(1007)
+        end
+      end
   end
 end
