@@ -1,4 +1,5 @@
 require 'pry'
+require './lib/negative_number_error'
 class StringCalculator
   def add(input)
 
@@ -6,6 +7,8 @@ class StringCalculator
 
     #return 0 if input is empty or nil
     return 0 if input.nil? || input.empty?
+
+    check_negative_number(input)
 
     sum = 0
     delimiter = "\n|,"
@@ -21,5 +24,16 @@ class StringCalculator
     end
 
     sum
+  end
+
+  private
+
+  def check_negative_number(input)
+    negative_numbers = input.scan(/-\d+/)
+    if negative_numbers.size > 1
+      raise NegativeNumberError, negative_numbers
+    elsif negative_numbers.size == 1
+      raise NegativeNumberError
+    end
   end
 end
