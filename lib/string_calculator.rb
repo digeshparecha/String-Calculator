@@ -16,6 +16,7 @@ class StringCalculator
     # It will check if input has any custom delimiter if has any then it will set delimiter
     if input_delimiter = input.match(/(?<=\/\/)(.*?)(?=\n)/)
       delimiter = input_delimiter[1]
+      input = input.split(/\n/)[1]
     end
 
     # sum every comma and \n seperated element from input
