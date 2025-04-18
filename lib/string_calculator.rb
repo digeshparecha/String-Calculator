@@ -10,7 +10,6 @@ class StringCalculator
 
     check_negative_number(input)
 
-    sum = 0
     delimiter = "\n|,"
 
     # It will check if input has any custom delimiter if has any then it will set delimiter
@@ -19,12 +18,11 @@ class StringCalculator
       input = input.split(/\n/)[1]
     end
 
-    # sum every comma and \n seperated element from input
-    input.split(/[?=#{delimiter}]/) do |el|
-      sum += el.to_i unless el.to_i > 1000
-    end
+    # convert all numbers to integer
+    numbers = input.split(/[?=#{delimiter}]/).map(&:to_i).select{|num| num <= 1000 }
 
-    sum
+    # sum every comma and \n seperated element from input
+    delimiter == '*' ? numbers.inject(:*)  : numbers.sum
   end
 
   private
