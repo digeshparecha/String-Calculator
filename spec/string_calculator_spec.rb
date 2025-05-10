@@ -1,0 +1,73 @@
+require_relative '../lib/string_calculator'
+
+describe StringCalculator do
+  describe '#add' do
+    context 'when input is empty or nil' do
+      it 'should return 0' do
+        expect(subject.add('')).to eq(0)
+        expect(subject.add(nil)).to eq(0)
+      end
+    end
+
+    context 'when input is non-empty comma separated string' do
+      it 'should return sum' do
+        expect(subject.add('1')).to eq(1)
+        expect(subject.add('1,2')).to eq(3)
+        expect(subject.add('1,2,3,4')).to eq(10)
+      end
+    end
+
+    context 'when input is has \n with comma' do
+      it 'should return sum' do
+        expect(subject.add('1')).to eq(1)
+        expect(subject.add("1\n2")).to eq(3)
+        expect(subject.add("1,2\n3,4")).to eq(10)
+      end
+    end
+    
+    context 'when input has custom delimiter' do
+      it 'should return sum of each element' do
+        expect(subject.add('1')).to eq(1)
+        expect(subject.add("//?\n1?2")).to eq(3)
+        expect(subject.add("//;\n1;2;3;4")).to eq(10)
+      end
+
+      it 'should return sum of the number even any number of delimiter given' do
+        expect(subject.add("//****\n1****2****3****4")).to eq(10)
+      end
+
+      context "when input has customn delimiter as *" do
+        it 'should return product of the numbers' do
+          expect(subject.add("//*\n1*2*3*4")).to eq(24)
+        end
+      end
+      
+    end
+
+    context 'when input has' do
+      context 'single negative number' do
+        it 'should retun error message' do
+          expect { subject.add("1\n-2") }.to raise_error do |error|
+            expect(error).to be_a(NegativeNumberError)
+            expect(error.message).to eq 'negative numbers not allowed'
+          end
+        end
+      end
+
+      context 'more than more negative number' do
+        it 'should retun error message with negative numbers' do
+          expect { subject.add("1\n-2\n4\n-5\n-6") }.to raise_error do |error|
+            expect(error).to be_a(NegativeNumberError)
+            expect(error.message).to eq 'negative numbers not allowed -2,-5,-6'
+          end
+        end
+      end
+    end
+
+      context 'when input has number grater than 1000' do
+        it 'should ignore that number in sum ' do
+          expect(subject.add('1,2,10001,4,1000')).to eq(1007)
+        end
+      end
+  end
+end
